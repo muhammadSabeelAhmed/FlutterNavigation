@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:meriapp/loginscreen.dart';
+import 'package:meriapp/ui/loginscreen.dart';
 
 void main() {
   runApp(MyApp());

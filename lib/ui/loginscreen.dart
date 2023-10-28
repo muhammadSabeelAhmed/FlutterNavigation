@@ -1,29 +1,32 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:meriapp/forgetscreen.dart';
-import 'package:meriapp/homescreen.dart';
-import 'package:meriapp/signupscreen.dart';
+import 'package:meriapp/constants/constants.dart';
+import 'package:meriapp/ui/forgetscreen.dart';
+import 'package:meriapp/ui/homescreen.dart';
+import 'package:meriapp/ui/signupscreen.dart';
 
 class LoginView extends StatelessWidget {
   const LoginView({super.key});
 
-  onLoginPressed(BuildContext context, memail, TextEditingController password) {
+  onLoginPressed(BuildContext context, name, memail, password) {
     String email = memail.text;
     if (email.contains("@") && email.contains(".com")) {
       print("Corerect Email");
       print("Email: ${password.text}");
       print("Password: ${password.text}");
+      Constants.name = name.text;
+      Navigator.pushReplacement(context,
+          MaterialPageRoute(builder: (BuildContext context) => HomeView()));
     } else {
       print("InCorrect Email");
     }
     memail.text = "";
     password.text = "";
-    Navigator.pushReplacement(context,
-        MaterialPageRoute(builder: (BuildContext context) => HomeView()));
   }
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController nameController = TextEditingController();
     TextEditingController emailController = TextEditingController();
     TextEditingController passwordController = TextEditingController();
 
@@ -42,6 +45,15 @@ class LoginView extends StatelessWidget {
               style: TextStyle(fontSize: 25, color: Colors.black),
             ),
             const SizedBox(height: 50),
+            TextField(
+              controller: nameController,
+              decoration: const InputDecoration(
+                prefixIcon: Icon(Icons.email),
+                border: OutlineInputBorder(),
+                hintText: "Name",
+              ),
+            ),
+            const SizedBox(height: 10),
             TextField(
               controller: emailController,
               decoration: const InputDecoration(
@@ -81,7 +93,8 @@ class LoginView extends StatelessWidget {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
-                  onLoginPressed(context, emailController, passwordController);
+                  onLoginPressed(context, nameController, emailController,
+                      passwordController);
                 },
                 style: ElevatedButton.styleFrom(
                   shape: StadiumBorder(),
